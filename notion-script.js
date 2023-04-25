@@ -71,5 +71,3 @@ setTimeout(() => {
     let notionPageContentObserver = new MutationObserver(callback);
     notionPageContentObserver.observe(notionPageContent, observerOptions);
 }, "3000");
-
-
