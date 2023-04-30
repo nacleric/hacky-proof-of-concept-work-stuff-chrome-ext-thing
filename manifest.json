@@ -2,17 +2,20 @@
   "name": "Hello Extensions",
   "description": "Base Level Extension",
   "version": "1.0",
-  "manifest_version": 2,
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+},
   "action": {
     "default_popup": "hello.html",
     "default_icon": "hello_extensions.png"
   },
-  "permissions": ["activeTab","scripting", "identity"],
+  "permissions": ["activeTab", "scripting", "identity", "storage"],
   "oauth2": {
-    "client_id": "107339612681-7ogjprs7qr1ma0h4bubvivonoubk19nd.apps.googleusercontent.com",
-    "scopes": [""]
+    "client_id": "739937104847-1sv3fjn4ogb8e44cgrd68uuh87cbpdvq.apps.googleusercontent.com",
+    "scopes": ["https://www.googleapis.com/auth/documents"]
   },
-
   "content_scripts": [
     {
       "matches": ["https://*.notion.so/*"],

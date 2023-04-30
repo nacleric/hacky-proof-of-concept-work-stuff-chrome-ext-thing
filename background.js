@@ -1,8 +1,7 @@
-const app = firebase.initializeApp(config);
-const auth = app.auth();
-const signInWithPopup = () => {
-  const provider = new firebase.auth.GoogleAuthProvider();
-  return auth.signInWithPopup(provider).catch((error) => {
-    console.log(error);
+console.log("in the background");
+chrome.identity.getAuthToken({ 'interactive': true }, function (token) {
+    console.log(token);
+    chrome.storage.local.set({ "gdoc": token }).then(() => {
+        console.log("Value is set to " + token);
+    });
   });
-};
