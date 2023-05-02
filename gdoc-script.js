@@ -35,26 +35,34 @@ function parseBody(bodyContent) {
     return body;
 }
 
-function createSnapshot() {
+function createSnapshot(isManual) {
     getGoogleDocument().then((document) => {
         let body = parseBody(document.body.content);
-        console.log(new Snapshot(body, new Date()));
+        console.log(new Snapshot(body, new Date(), isManual));
     });
 }
 
 function main() {
-    // FIFO
-    let checkCopypaste = [];
+    let keyPressQueue = [];
     let editingIFrame = document.querySelector(
         ".docs-texteventtarget-iframe"
     );
-    editingIFrame.contentDocument.addEventListener("keydown", function(event) {
-        console.log(event)
-    });
+    editingIFrame.contentDocument.addEventListener("keydown", function (event) {
+        if (event) {
+            keyPressQueue.push(event.key.toLowerCase())
+        }
 
-    // document.addEventListener("keypress", function(event) {
-    //     console.log(event)
-    // });
+        if (keyPressQueue.length > 2) {
+            keyPressQueue.shift()
+        }
+
+        if (keyPressQueue[0] === "meta" && keyPressQueue[1] === "v") {
+            console.log("copypasted mac");
+        } else if (keyPressQueue[0] === "control" && keyPressQueue[1] === "v") {
+            console.log("copypasted windows")
+        }
+        console.log(keyPressQueue)
+    });
 
     chrome.storage.local.get(["gdoc"]).then((result) => {
         console.log("Value currently is " + result.gdoc);
